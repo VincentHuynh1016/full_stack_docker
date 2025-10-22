@@ -1,40 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Full-Stack User Management App
 
-## Getting Started
+This project is a **full-stack web application** that demonstrates CRUD operations (Create, Read, Update, Delete) on user data using a **React + Next.js frontend** and a **Flask backend** connected to a **PostgreSQL database**. It is containerized with **Docker Compose** for seamless deployment.
 
-First, run the development server:
+## 🧩 Overview
+
+The frontend, built with React and TypeScript, provides an intuitive interface for managing users — displaying user cards, adding new users, updating existing ones, and deleting entries. The backend, powered by Flask, exposes RESTful API endpoints to interact with the PostgreSQL database. Docker Compose coordinates the three core services: the frontend, Flask API, and PostgreSQL.
+
+## ⚙️ Tech Stack
+
+* **Frontend:** React, Next.js, TypeScript, Axios, TailwindCSS
+* **Backend:** Flask (Python)
+* **Database:** PostgreSQL
+* **Deployment:** Docker, Docker Compose
+
+## 🧠 How It Works
+
+* The **Flask API** (port `4000`) handles requests like `/api/flask/users` for user operations.
+* The **React/Next.js UI** consumes this API to dynamically display user data and perform CRUD actions.
+* The **PostgreSQL service** stores all user records persistently through Docker volumes.
+* Configuration is managed in `compose.yml`, which defines services for Flask and the database.
+
+
+Here’s an updated **README.md** section you can append after the overview:
+
+---
+
+## 🚀 Installation & Setup
+
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-repo-url>
+cd <your-repo-name>
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Build and Run with Docker Compose
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Make sure Docker is installed and running, then execute:
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+docker compose up --build
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+This command will:
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Build the Flask image using `flask.dockerfile`
+* Start the Flask backend on **port 4000**
+* Launch a **PostgreSQL** database on **port 5432**
+* Persist database data through a Docker volume (`pgdata`)
 
-## Learn More
+### 3. Access the Application
 
-To learn more about Next.js, take a look at the following resources:
+Once the containers are running:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+* **Frontend:** [http://localhost:3000](http://localhost:3000)
+* **Backend API:** [http://localhost:4000/api/flask/users](http://localhost:4000/api/flask/users)
+* **Database:** localhost:5432 (user: `postgres`, password: `postgres`)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Stopping the Containers
 
-## Deploy on Vercel
+```bash
+docker compose down
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To also remove volumes (clears all stored data):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+```bash
+docker compose down -v
+```
+
+---
